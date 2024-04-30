@@ -15,7 +15,7 @@ public class App {
             int num1 = sc.nextInt();
             System.out.print("두 번째 숫자를 입력하세요: ");
             int num2 = sc.nextInt();
-            System.out.print("연산자를 입력하세요 (+, -, *, /) 또는 'exit'로 종료하거나 'remove'를 입력하여 첫 번째 결과값 삭제하세요: ");
+            System.out.print("연산자를 입력하세요 (+, -, *, /) 또는 'exit'=종료, 'remove'=첫 번째 결과값 삭제, 'inquiry'=저장된 결과값 확인: ");
             input = sc.next();
 
             if (input.equals("exit")) {
@@ -26,6 +26,18 @@ public class App {
                     System.out.println("삭제된 결과: " + removedResult);
                 } else {
                     System.out.println("삭제할 결과가 없습니다.");
+                }
+                continue;
+            } else if (input.equals("inquiry")) {
+                if (ans.isEmpty()) {
+                    System.out.println("저장된 결과가 없습니다.");
+                } else {
+                    System.out.println("저장된 결과 값:");
+                    int count = 1;
+                    for (int value : ans) {
+                        System.out.println(count + "번째 결과 : " + value);
+                        count++;
+                    }
                 }
                 continue;
             }
