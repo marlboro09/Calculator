@@ -22,7 +22,7 @@ public class App {
                 break; // exit 입력 시 반복문 종료
             } else if (input.equals("remove")) {
                 if (!ans.isEmpty()) {
-                    int removedResult = ans.remove(0);
+                    int removedResult = ans.remove(0);//remove : 메서드 리스트나 컬렉션에서 요소를 제거하는데 사용
                     System.out.println("삭제된 결과: " + removedResult);
                 } else {
                     System.out.println("삭제할 결과가 없습니다.");
