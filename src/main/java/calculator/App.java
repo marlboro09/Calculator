@@ -1,10 +1,12 @@
 package calculator;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
         Calculator calculator = new Calculator();
+        List<Integer> results = calculator.getInitializedResults();
         Scanner sc = new Scanner(System.in);
 
         String input;
@@ -21,23 +23,15 @@ public class App {
                 break;
             } else if (input.equals("remove")) {
                 try {
-                    calculator.getResults().remove(0);
-                    System.out.println("삭제된 결과: " + calculator.getResults().get(0));
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("삭제할 결과가 없습니다.");
+                    calculator.removeFirstResult();
+                    System.out.println("첫 번째 결과가 삭제되었습니다.");
+                } catch (CalculatorException e) {
+                    System.out.println(e.getMessage());
                 }
                 continue;
-            } else if (input.equals("inquiry")) {
-                if (calculator.getResults().isEmpty()) {
-                    System.out.println("저장된 결과가 없습니다.");
-                } else {
-                    System.out.println("저장된 결과 값:");
-                    int count = 1;
-                    for (int value : calculator.getResults()) {
-                        System.out.println(count + "번째 결과 : " + value);
-                        count++;
-                    }
-                }
+            }
+            else if (input.equals("inquiry")) {
+                calculator.showResults();
                 continue;
             }
 
@@ -46,6 +40,8 @@ public class App {
                 int result = calculator.calculate(num1, num2, op);
                 System.out.println("결과: " + result);
             } catch (ArithmeticException | IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            } catch (CalculatorException e) {
                 System.out.println(e.getMessage());
             }
         }
