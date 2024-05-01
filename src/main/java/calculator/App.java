@@ -1,11 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
+package calculator;
+
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-
-        List<Integer> ans = new ArrayList<>(); // 결과값을 저장할 리스트
+        Calculator calculator = new Calculator();
         Scanner sc = new Scanner(System.in);
 
         String input;
@@ -19,22 +18,22 @@ public class App {
             input = sc.next();
 
             if (input.equals("exit")) {
-                break; // exit 입력 시 반복문 종료
+                break;
             } else if (input.equals("remove")) {
-                if (!ans.isEmpty()) {
-                    int removedResult = ans.remove(0);//remove : 메서드 리스트나 컬렉션에서 요소를 제거하는데 사용
-                    System.out.println("삭제된 결과: " + removedResult);
-                } else {
+                try {
+                    calculator.getResults().remove(0);
+                    System.out.println("삭제된 결과: " + calculator.getResults().get(0));
+                } catch (IndexOutOfBoundsException e) {
                     System.out.println("삭제할 결과가 없습니다.");
                 }
                 continue;
             } else if (input.equals("inquiry")) {
-                if (ans.isEmpty()) {
+                if (calculator.getResults().isEmpty()) {
                     System.out.println("저장된 결과가 없습니다.");
                 } else {
                     System.out.println("저장된 결과 값:");
                     int count = 1;
-                    for (int value : ans) {
+                    for (int value : calculator.getResults()) {
                         System.out.println(count + "번째 결과 : " + value);
                         count++;
                     }
@@ -42,37 +41,12 @@ public class App {
                 continue;
             }
 
-            char op = input.charAt(0);
-            int result;
-            switch (op) {
-                case '+':
-                    result = num1 + num2;
-                    break;
-                case '-':
-                    result = num1 - num2;
-                    break;
-                case '*':
-                    result = num1 * num2;
-                    break;
-                case '/':
-                    if (num2 == 0) {
-                        System.out.println("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다. ");
-                        continue;
-                    }
-                    result = num1 / num2;
-                    break;
-                default:
-                    System.out.println("잘못된 입력입니다.");
-                    continue;
-            }
-
-            System.out.println("결과: " + result);
-            ans.add(result);
-
-            // 저장된 결과 값 출력
-            System.out.println("저장된 결과 값:");
-            for (int i = 0; i < ans.size(); i++) {
-                System.out.println((i + 1) + "번째 결과 : " + ans.get(i));
+            try {
+                char op = input.charAt(0);
+                int result = calculator.calculate(num1, num2, op);
+                System.out.println("결과: " + result);
+            } catch (ArithmeticException | IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
 
